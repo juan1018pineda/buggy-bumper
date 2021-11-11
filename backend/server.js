@@ -26,4 +26,4 @@ app.post(userRoutes.CREATE, usersController.createUser);
 app.put(userRoutes.UPDATE, usersController.updateUser);
 app.delete(userRoutes.DELETE, usersController.deleteUser);
 
-app.listen(3000, () => console.log("Listening on port 3000"));
+app.listen(3004, () => console.log("Listening on port 3004"));
