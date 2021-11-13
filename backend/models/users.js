@@ -6,6 +6,7 @@ const schema = {
   password: String,
   name: String,
   phone: String,
+  userPass: String,
 };
 
 export const Users = mongoose.model("users", schema);

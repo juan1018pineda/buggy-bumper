@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 import db from "../db.js";
 import { Users } from "../models/index.js";
+import bcrypt from "bcrypt";
 
 export const getAllUsers = (req, res) => {
   db.connect();
@@ -16,9 +17,9 @@ export const getAllUsers = (req, res) => {
 export const getOneUser = (req, res) => {
   db.connect();
 
-  const { id } = req.params;
-
-  Users.findById(id, (err, data) => {
+  const { email } = req.params;
+  console.log(email);
+  Users.findOne({ email }, (err, data) => {
     if (err) res.sendStatus(404);
     res.status(200).json(data);
   });
@@ -26,12 +27,16 @@ export const getOneUser = (req, res) => {
 
 export const createUser = (req, res) => {
   db.connect();
-  if (req.body) {
-    Users.create(req.body, (err, user) => {
-      if (err) res.sendStatus(500);
-      res.status(201).json(user);
-    });
-  }
+  const { password } = req.body;
+  bcrypt.hash(password, 10).then(function (hash) {
+    req.body.userPass = hash;
+    if (req.body) {
+      Users.create(req.body, (err, user) => {
+        if (err) res.sendStatus(500);
+        res.status(201).json(user);
+      });
+    }
+  });
 };
 
 export const updateUser = (req, res) => {

@@ -1,4 +1,4 @@
-import carRoutes from "./car.routes.js";
-import userRoutes from "./user.routes.js";
+import carRouter from "./car.routes.js";
+import userRouter from "./user.routes.js";
 
-export { carRoutes, userRoutes };
+export { carRouter, userRouter };

@@ -1,10 +1,11 @@
-.container {
-  background: url("../../assets/imagen-banner3.jpeg") no-repeat center;
+.login-container {
+  background: url("../../assets/imagen-banner3.jpeg") no-repeat bottom;
   background-size: cover;
   height: 100vh;
   display: flex;
   flex-direction: row;
-  .titles {
+  .login-titles {
+    z-index: 1;
     width: 70vw;
     display: flex;
     flex-direction: column;
@@ -27,11 +28,11 @@
     }
   }
   .login-form {
+    z-index: 1;
     width: 30vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // align-items: center;
     gap: 2rem;
     input,
     button {
@@ -41,10 +42,26 @@
       padding: 1rem;
       border: none;
     }
+    input::placeholder {
+      color: black;
+    }
     button {
       border-radius: 8px;
       color: white;
       background-color: #cc5227;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: black;
     }
   }
+}
+
+.login-container::before {
+  position: absolute;
+  top: 0;
+  content: "";
+  width: 82%;
+  height: 100%;
+  background-color: rgba(219, 118, 49, 0.6);
 }
