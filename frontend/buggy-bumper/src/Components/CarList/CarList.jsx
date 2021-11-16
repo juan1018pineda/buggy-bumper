@@ -2,7 +2,7 @@ import React from "react";
 
 import "./CarList.scss";
 
-const CarList = () => {
+const CarList = ({ cars }) => {
   return (
     <div className="car-list-container">
       <header className="car-list-header">
@@ -15,23 +15,27 @@ const CarList = () => {
       </div>
       <section>
         <table>
-          <tr>
-            <th>Id</th>
-            <th>Marcas</th>
-            <th>Puertas</th>
-            <th>Maletas</th>
-            <th>Acciones</th>
-          </tr>
-          <tr>
-            <td>xxxx</td>
-            <td>xxxx</td>
-            <td>xxxx</td>
-            <td>xxxx</td>
-            <td>
-              <button>Editar</button>
-              <button>Eliminar</button>
-            </td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Marcas</th>
+              <th>Puertas</th>
+              <th>Maletas</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cars?.map((item, i) => (
+              <tr key={i}>
+                <td>{item._id}</td>
+                <td>{item.carType}</td>
+                <td>{item.doors}</td>
+                <td>{item.bags}</td>
+                <button>Editar</button>
+                <button>Eliminar</button>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </section>
     </div>
