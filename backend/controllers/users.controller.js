@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import db from "../db.js";
 import { Users } from "../models/index.js";
 import bcrypt from "bcrypt";
+import { response } from "express";
 
 export const getAllUsers = (req, res) => {
   db.connect();
@@ -14,11 +15,27 @@ export const getAllUsers = (req, res) => {
   });
 };
 
+export const login = async (req, res) => {
+  db.connect();
+  const { email, password } = req.body;
+  const user = await Users.findOne({ email });
+  if (user) {
+    const frontInput = email + password;
+    const checkLogin = await bcrypt.compare(frontInput, user.userPass);
+    if (checkLogin) {
+      res.send({ message: "login sucess", user: user });
+    } else {
+      res.send({ message: "wrong credentials" });
+    }
+  } else {
+    res.send("not register");
+  }
+};
+
 export const getOneUser = (req, res) => {
   db.connect();
 
   const { email } = req.params;
-  console.log(email);
   Users.findOne({ email }, (err, data) => {
     if (err) res.sendStatus(404);
     res.status(200).json(data);
@@ -27,8 +44,10 @@ export const getOneUser = (req, res) => {
 
 export const createUser = (req, res) => {
   db.connect();
-  const { password } = req.body;
-  bcrypt.hash(password, 10).then(function (hash) {
+  const { email, password } = req.body;
+  const user = email + password;
+
+  bcrypt.hash(user, 10).then(function (hash) {
     req.body.userPass = hash;
     if (req.body) {
       Users.create(req.body, (err, user) => {

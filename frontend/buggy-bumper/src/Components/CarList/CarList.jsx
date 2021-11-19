@@ -31,8 +31,10 @@ const CarList = ({ cars }) => {
                 <td>{item.carType}</td>
                 <td>{item.doors}</td>
                 <td>{item.bags}</td>
-                <button>Editar</button>
-                <button>Eliminar</button>
+                <td>
+                  <button>Editar</button>
+                  <button>Eliminar</button>
+                </td>
               </tr>
             ))}
           </tbody>

@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Login.scss";
 
+import { checkLogin } from "../../api/adminUsers";
+
 const Login = () => {
-  const [login, setLogin] = useState({ email: "", password: "" });
+  // const [login, setLogin] = useState({ email: "", password: "" });
 
   const handleLogin = (event) => {
     event.preventDefault();
     const email = event.target[0].value;
     const password = event.target[1].value;
-    setLogin({ email, password });
+    const login = { email, password };
+    // setLogin({ email, password });
+    checkLogin(login);
   };
-  console.log(login);
 
   return (
     <div className="login-container">
