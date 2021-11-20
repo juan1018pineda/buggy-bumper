@@ -1,33 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.scss";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-
-import { API_URL } from "./constants";
 
 import Login from "./Components/Login";
 import CarList from "./Components/CarList";
 
 function App() {
-  const [cars, setCars] = useState([]);
-  const endpoint = "/cars";
-  useEffect(() => {
-    const loadCars = () => {
-      fetch(`${API_URL}${endpoint}`)
-        .then((data) => data.json())
-        .then((data) => {
-          setCars(data);
-        });
-    };
-    loadCars();
-  }, []);
+  const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState("");
+
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Login />}></Route>
+        <Route
+          exact
+          path="/"
+          element={<Login auth={auth} setUser={setUser} setAuth={setAuth} />}
+        ></Route>
         <Route
           exact
           path="/admin"
-          element={<CarList authorized={true} cars={cars} />}
+          element={<CarList authorized={auth} user={user}/>}
         ></Route>
       </Routes>
     </Router>

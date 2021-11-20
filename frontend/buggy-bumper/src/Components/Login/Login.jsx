@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./Login.scss";
 
 import { checkLogin } from "../../api/adminUsers";
 
-const Login = () => {
-  // const [login, setLogin] = useState({ email: "", password: "" });
+import { useNavigate } from "react-router-dom";
 
-  const handleLogin = (event) => {
+const Login = ({ auth, setAuth, setUser }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth) {
+      navigate("/admin");
+    }
+  }, [auth, navigate])
+
+  const handleLogin = async (event) => {
     event.preventDefault();
     const email = event.target[0].value;
     const password = event.target[1].value;
     const login = { email, password };
-    // setLogin({ email, password });
-    checkLogin(login);
+    setUser(email);
+    const newAuth = await checkLogin(login);
+    setAuth(newAuth);
   };
 
   return (
@@ -25,8 +34,8 @@ const Login = () => {
         <h2>LA MEJOR RED DE ALQUILER DE AUTOS</h2>
       </section>
       <form className="login-form" onSubmit={handleLogin}>
-        <input type="text" placeholder="Usuario" />
-        <input type="password" placeholder="Clave" />
+        <input type="text" placeholder="Usuario" autoComplete="email"/>
+        <input type="password" placeholder="Clave" autoComplete="current-password" />
         <button type="submit">Ingresar</button>
       </form>
     </div>

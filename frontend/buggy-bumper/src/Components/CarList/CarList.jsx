@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { API_URL } from "../../constants";
 
 import "./CarList.scss";
 
-const CarList = ({ cars, authorized }) => {
-  if (!authorized) {
-    console.log(authorized);
-    return <Navigate to="/" />;
-  }
+const CarList = ({ authorized, user }) => {
+  const [cars, setCars] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authorized) {
+      navigate("/");
+    } else {
+      const loadCars = async () => {
+        const data = await (await fetch(`${API_URL}/cars`)).json();
+        setCars(data);
+      };
+
+      loadCars();
+    }
+  }, [authorized, navigate]);
+
   return (
     <div className="car-list-container">
       <header className="car-list-header">
         <h1>BUGGY & BUMPER, INC</h1>
-        <span>Usuario:xxxx</span>
+        <span>Usuario: {user}</span>
       </header>
       <div className="list-car-title">
         <span>Lista de carros</span>

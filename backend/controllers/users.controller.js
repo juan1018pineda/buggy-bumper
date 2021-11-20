@@ -24,13 +24,13 @@ export const login = async (req, res) => {
     const frontInput = email + password;
     const checkLogin = await bcrypt.compare(frontInput, user.userPass);
     if (checkLogin) {
-      res.send({ message: "login sucess", user: user });
+      res.send({ message: "login sucess", auth: true });
     } else {
-      res.send({ message: "Wrong email or password" });
+      res.send({ message: "Wrong email or password", auth: false  });
     }
   } else {
-    res.send("user not register");
-  }
+    res.send({ message: "Wrong email or password", auth: false  });
+  } 
 };
 
 export const getOneUser = (req, res) => {
