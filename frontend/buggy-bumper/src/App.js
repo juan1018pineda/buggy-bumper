@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.scss";
-// import { BrowseRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 
 import { API_URL } from "./constants";
 
@@ -21,10 +21,16 @@ function App() {
     loadCars();
   }, []);
   return (
-    <div className="App">
-      <Login />
-      {/* <CarList cars={cars} /> */}
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Login />}></Route>
+        <Route
+          exact
+          path="/admin"
+          element={<CarList authorized={true} cars={cars} />}
+        ></Route>
+      </Routes>
+    </Router>
   );
 }
 

@@ -18,6 +18,7 @@ export const getAllUsers = (req, res) => {
 export const login = async (req, res) => {
   db.connect();
   const { email, password } = req.body;
+  console.log(email, password)
   const user = await Users.findOne({ email });
   if (user) {
     const frontInput = email + password;
@@ -25,10 +26,10 @@ export const login = async (req, res) => {
     if (checkLogin) {
       res.send({ message: "login sucess", user: user });
     } else {
-      res.send({ message: "wrong credentials" });
+      res.send({ message: "Wrong email or password" });
     }
   } else {
-    res.send("not register");
+    res.send("user not register");
   }
 };
 

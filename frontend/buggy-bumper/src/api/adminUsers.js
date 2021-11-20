@@ -4,5 +4,9 @@ import axios from "axios";
 export const checkLogin = async (login) => {
   const endpoint = "/users/login";
   const response = await axios.post(`${API_URL}${endpoint}`, login);
-  alert(response.data);
+  if (response.data.message) {
+    alert(response.data.message);
+  } else {
+    alert(response.data);
+  }
 };

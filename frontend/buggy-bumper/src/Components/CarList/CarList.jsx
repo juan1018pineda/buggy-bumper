@@ -1,8 +1,14 @@
 import React from "react";
 
+import { Navigate } from "react-router-dom";
+
 import "./CarList.scss";
 
-const CarList = ({ cars }) => {
+const CarList = ({ cars, authorized }) => {
+  if (!authorized) {
+    console.log(authorized);
+    return <Navigate to="/" />;
+  }
   return (
     <div className="car-list-container">
       <header className="car-list-header">
