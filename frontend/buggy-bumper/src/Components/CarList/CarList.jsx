@@ -1,13 +1,16 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import { API_URL } from "../../constants";
+import NewCar from "../NewCar";
 
 import "./CarList.scss";
 
 const CarList = ({ authorized, user }) => {
   const [cars, setCars] = useState([]);
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,13 +18,17 @@ const CarList = ({ authorized, user }) => {
       navigate("/");
     } else {
       const loadCars = async () => {
-        const data = await (await fetch(`${API_URL}/cars`)).json();
-        setCars(data);
+        const cars = await axios.get(`${API_URL}/cars`);
+        setCars(cars.data);
       };
 
       loadCars();
     }
   }, [authorized, navigate]);
+
+  const handleNewCar = () => {
+    setShow(true);
+  };
 
   return (
     <div className="car-list-container">
@@ -31,7 +38,7 @@ const CarList = ({ authorized, user }) => {
       </header>
       <div className="list-car-title">
         <span>Lista de carros</span>
-        <button>Nuevo</button>
+        <button onClick={handleNewCar}>Nuevo</button>
       </div>
       <section>
         <table>
@@ -60,6 +67,7 @@ const CarList = ({ authorized, user }) => {
           </tbody>
         </table>
       </section>
+      <NewCar show={show} setShow={setShow} />
     </div>
   );
 };

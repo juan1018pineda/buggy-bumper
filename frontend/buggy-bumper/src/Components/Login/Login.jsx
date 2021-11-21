@@ -20,8 +20,10 @@ const Login = ({ auth, setAuth, setUser }) => {
     const email = event.target[0].value;
     const password = event.target[1].value;
     const login = { email, password };
-    setUser(email);
     const newAuth = await checkLogin(login);
+    if(newAuth){
+      setUser(email);
+    }
     setAuth(newAuth);
   };
 
