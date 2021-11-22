@@ -26,7 +26,7 @@ const CarList = ({ authorized, user }) => {
     }
   }, [authorized, navigate]);
 
-  const handleNewCar = () => {
+  const handleModal = () => {
     setShow(true);
   };
 
@@ -38,7 +38,7 @@ const CarList = ({ authorized, user }) => {
       </header>
       <div className="list-car-title">
         <span>Lista de carros</span>
-        <button onClick={handleNewCar}>Nuevo</button>
+        <button onClick={handleModal}>Nuevo</button>
       </div>
       <section>
         <table>
@@ -67,7 +67,7 @@ const CarList = ({ authorized, user }) => {
           </tbody>
         </table>
       </section>
-      <NewCar show={show} setShow={setShow} />
+      <NewCar show={show} setShow={setShow} setCars={setCars} />
     </div>
   );
 };
