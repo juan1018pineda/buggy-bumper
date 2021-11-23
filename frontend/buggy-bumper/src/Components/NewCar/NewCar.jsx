@@ -3,8 +3,8 @@ import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { addCar } from "../../api/adminCars";
 import "./NewCar.scss";
 
-const NewCar = ({ show, setShow, setCars }) => {
-  const handleClose = () => setShow(false);
+const NewCar = ({ addModal, setAddModal, setCars }) => {
+  const handleClose = () => setAddModal(false);
 
   const handleAddCar = async (event) => {
     event.preventDefault();
@@ -23,7 +23,7 @@ const NewCar = ({ show, setShow, setCars }) => {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} size="xl" centered>
+      <Modal show={addModal} onHide={handleClose} size="xl" centered>
         <Modal.Header closeButton>
           <Modal.Title>Nuevo Carro</Modal.Title>
         </Modal.Header>
@@ -78,7 +78,7 @@ const NewCar = ({ show, setShow, setCars }) => {
               </Col>
             </Form.Group>
             <Modal.Footer>
-              <Button variant="primary" type="submit">
+              <Button type="submit">
                 Agregar
               </Button>
             </Modal.Footer>

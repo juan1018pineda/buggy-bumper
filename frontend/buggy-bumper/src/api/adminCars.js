@@ -10,3 +10,13 @@ export const addCar = async (newCar) => {
     console.log(response);
   }
 };
+
+export const deleteCar = async (idCar) => {
+  const endpoint = `/cars/delete/${idCar}`;
+  const response = await axios.delete(`${API_URL}${endpoint}`);
+  if (response) {
+    return response.data;
+  } else {
+    console.log(response);
+  }
+};

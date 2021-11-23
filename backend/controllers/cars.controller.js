@@ -57,6 +57,7 @@ export const deleteCar = (req, res) => {
     if (err) res.status(404).send(err);
     cars.remove((err, value) => {
       if (err) res.status(500).send(err);
+      console.log(value);
       res.send(value);
     });
   });

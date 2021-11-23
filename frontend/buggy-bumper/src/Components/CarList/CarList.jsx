@@ -5,12 +5,18 @@ import { useNavigate } from "react-router-dom";
 
 import { API_URL } from "../../constants";
 import NewCar from "../NewCar";
+import DeleteCar from "../DeleteCar";
 
 import "./CarList.scss";
 
 const CarList = ({ authorized, user }) => {
   const [cars, setCars] = useState([]);
-  const [show, setShow] = useState(false);
+  const [addModal, setAddModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState({
+    showModal: false,
+    carId: undefined,
+    pos: undefined,
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,8 +32,12 @@ const CarList = ({ authorized, user }) => {
     }
   }, [authorized, navigate]);
 
-  const handleModal = () => {
-    setShow(true);
+  const handleModalAdd = () => {
+    setAddModal(true);
+  };
+
+  const handleModalDelete = (carId, pos) => {
+    setDeleteModal({ showModal: true, carId, pos });
   };
 
   return (
@@ -38,7 +48,7 @@ const CarList = ({ authorized, user }) => {
       </header>
       <div className="list-car-title">
         <span>Lista de carros</span>
-        <button onClick={handleModal}>Nuevo</button>
+        <button onClick={handleModalAdd}>Nuevo</button>
       </div>
       <section>
         <table>
@@ -52,22 +62,25 @@ const CarList = ({ authorized, user }) => {
             </tr>
           </thead>
           <tbody>
-            {cars?.map((item, i) => (
+            {cars?.map(({ _id, carType, doors, bags }, i) => (
               <tr key={i}>
-                <td>{item._id}</td>
-                <td>{item.carType}</td>
-                <td>{item.doors}</td>
-                <td>{item.bags}</td>
+                <td>{_id}</td>
+                <td>{carType}</td>
+                <td>{doors}</td>
+                <td>{bags}</td>
                 <td>
-                  <button>Editar</button>
-                  <button>Eliminar</button>
+                  <button value={_id}>Editar</button>
+                  <button onClick={() => handleModalDelete(_id, i)}>
+                    Eliminar
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </section>
-      <NewCar show={show} setShow={setShow} setCars={setCars} />
+      <NewCar addModal={addModal} setAddModal={setAddModal} setCars={setCars} />
+      <DeleteCar deleteModal={deleteModal} setDeleteModal={setDeleteModal} setCars={setCars} />
     </div>
   );
 };
