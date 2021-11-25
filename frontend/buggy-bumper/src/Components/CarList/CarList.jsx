@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { API_URL } from "../../constants";
 import NewCar from "../NewCar";
+import EditCar from "../EditCar";
 import DeleteCar from "../DeleteCar";
 
 import "./CarList.scss";
@@ -12,6 +13,11 @@ import "./CarList.scss";
 const CarList = ({ authorized, user }) => {
   const [cars, setCars] = useState([]);
   const [addModal, setAddModal] = useState(false);
+  const [editModal, setEditModal] = useState({
+    showModal: false,
+    carId: undefined,
+    pos: undefined,
+  });
   const [deleteModal, setDeleteModal] = useState({
     showModal: false,
     carId: undefined,
@@ -34,6 +40,10 @@ const CarList = ({ authorized, user }) => {
 
   const handleModalAdd = () => {
     setAddModal(true);
+  };
+
+  const handleModalEdit = (carId, pos) => {
+    setEditModal({ showModal: true, carId, pos });
   };
 
   const handleModalDelete = (carId, pos) => {
@@ -69,7 +79,9 @@ const CarList = ({ authorized, user }) => {
                 <td>{doors}</td>
                 <td>{bags}</td>
                 <td>
-                  <button value={_id}>Editar</button>
+                  <button onClick={() => handleModalEdit(_id, i)}>
+                    Editar
+                  </button>
                   <button onClick={() => handleModalDelete(_id, i)}>
                     Eliminar
                   </button>
@@ -80,7 +92,17 @@ const CarList = ({ authorized, user }) => {
         </table>
       </section>
       <NewCar addModal={addModal} setAddModal={setAddModal} setCars={setCars} />
-      <DeleteCar deleteModal={deleteModal} setDeleteModal={setDeleteModal} setCars={setCars} />
+      <EditCar
+        editModal={editModal}
+        setEditModal={setEditModal}
+        setCars={setCars}
+        car={cars[editModal.pos]}
+      />
+      <DeleteCar
+        deleteModal={deleteModal}
+        setDeleteModal={setDeleteModal}
+        setCars={setCars}
+      />
     </div>
   );
 };

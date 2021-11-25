@@ -40,11 +40,12 @@ export const updateCar = (req, res) => {
 
   db.connect();
 
-  Cars.findById(id, (err, cars) => {
+  Cars.findById(id, (err, car) => {
     if (err) res.status(500).send(err);
-    Cars.updateOne(cars, updatedCar, (err, value) => {
+    res.status(200).send(updatedCar);
+    Cars.updateOne(car, updatedCar, (err, value) => {
       if (err) res.status(500).send(err);
-      res.status(200).send(value);
+      // res.status(200).send(value);
     });
   });
 };

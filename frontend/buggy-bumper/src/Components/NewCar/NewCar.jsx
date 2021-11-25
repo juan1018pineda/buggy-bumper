@@ -17,7 +17,7 @@ const NewCar = ({ addModal, setAddModal, setCars }) => {
       image: event.target[5].value,
     };
     const car = await addCar(newCar);
-    setCars(prevState => [...prevState, car]);
+    setCars((prevState) => [...prevState, car.data]);
     handleClose();
   };
 
@@ -74,13 +74,11 @@ const NewCar = ({ addModal, setAddModal, setCars }) => {
                 Subir imagen
               </Form.Label>
               <Col sm={6}>
-                <Form.Control type="text" />
+                <Form.Control type="file" />
               </Col>
             </Form.Group>
             <Modal.Footer>
-              <Button type="submit">
-                Agregar
-              </Button>
+              <Button type="submit">Agregar</Button>
             </Modal.Footer>
           </Form>
         </Modal.Body>

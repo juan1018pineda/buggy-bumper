@@ -4,6 +4,7 @@ import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 
 import Login from "./Components/Login";
 import CarList from "./Components/CarList";
+import Home from "./Components/Home";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -21,6 +22,11 @@ function App() {
           exact
           path="/admin"
           element={<CarList authorized={auth} user={user}/>}
+        ></Route>
+        <Route
+          exact
+          path="/home"
+          element={<Home />}
         ></Route>
       </Routes>
     </Router>

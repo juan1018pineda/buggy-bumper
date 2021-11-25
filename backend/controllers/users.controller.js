@@ -18,7 +18,6 @@ export const getAllUsers = (req, res) => {
 export const login = async (req, res) => {
   db.connect();
   const { email, password } = req.body;
-  console.log(email, password)
   const user = await Users.findOne({ email });
   if (user) {
     const frontInput = email + password;
@@ -26,11 +25,11 @@ export const login = async (req, res) => {
     if (checkLogin) {
       res.send({ message: "login sucess", auth: true });
     } else {
-      res.send({ message: "Wrong email or password", auth: false  });
+      res.send({ message: "Wrong email or password", auth: false });
     }
   } else {
-    res.send({ message: "Wrong email or password", auth: false  });
-  } 
+    res.send({ message: "Wrong email or password", auth: false });
+  }
 };
 
 export const getOneUser = (req, res) => {
