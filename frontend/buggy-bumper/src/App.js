@@ -7,8 +7,8 @@ import CarList from "./Components/CarList";
 import Home from "./Components/Home";
 
 function App() {
-  const [auth, setAuth] = useState(false);
-  const [user, setUser] = useState("");
+  const authorized = localStorage.getItem("authorized");
+  const [auth, setAuth] = useState(authorized);
 
   return (
     <Router>
@@ -16,18 +16,14 @@ function App() {
         <Route
           exact
           path="/"
-          element={<Login auth={auth} setUser={setUser} setAuth={setAuth} />}
+          element={<Login auth={auth} setAuth={setAuth} />}
         ></Route>
         <Route
           exact
           path="/admin"
-          element={<CarList authorized={auth} user={user}/>}
+          element={<CarList auth={auth} setAuth={setAuth}/>}
         ></Route>
-        <Route
-          exact
-          path="/home"
-          element={<Home />}
-        ></Route>
+        <Route exact path="/home" element={<Home />}></Route>
       </Routes>
     </Router>
   );

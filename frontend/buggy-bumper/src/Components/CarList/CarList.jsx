@@ -10,7 +10,8 @@ import DeleteCar from "../DeleteCar";
 
 import "./CarList.scss";
 
-const CarList = ({ authorized, user }) => {
+const CarList = ({ auth, setAuth }) => {
+  const user = localStorage.authorized;
   const [cars, setCars] = useState([]);
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState({
@@ -25,8 +26,9 @@ const CarList = ({ authorized, user }) => {
   });
   const navigate = useNavigate();
 
+
   useEffect(() => {
-    if (!authorized) {
+    if (!auth) {
       navigate("/");
     } else {
       const loadCars = async () => {
@@ -36,7 +38,7 @@ const CarList = ({ authorized, user }) => {
 
       loadCars();
     }
-  }, [authorized, navigate]);
+  }, [auth, navigate]);
 
   const handleModalAdd = () => {
     setAddModal(true);
@@ -50,11 +52,26 @@ const CarList = ({ authorized, user }) => {
     setDeleteModal({ showModal: true, carId, pos });
   };
 
+  const logOut = () => {
+    localStorage.removeItem("authorized");
+    setAuth(false);
+    navigate("/");
+  };
+
   return (
     <div className="car-list-container">
       <header className="car-list-header">
         <h1>BUGGY & BUMPER, INC</h1>
-        <span>Usuario: {user}</span>
+        <div className="user-info">
+          <span>Usuario: {user}</span>
+          <button
+            onClick={() => {
+              logOut();
+            }}
+          >
+            Salir
+          </button>
+        </div>
       </header>
       <div className="list-car-title">
         <span>Lista de carros</span>

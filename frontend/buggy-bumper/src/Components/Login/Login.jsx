@@ -6,7 +6,7 @@ import { checkLogin } from "../../api/adminUsers";
 
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ auth, setAuth, setUser }) => {
+const Login = ({ auth, setAuth }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,9 +20,10 @@ const Login = ({ auth, setAuth, setUser }) => {
     const email = event.target[0].value;
     const password = event.target[1].value;
     const login = { email, password };
+
     const newAuth = await checkLogin(login);
     if(newAuth){
-      setUser(email);
+      localStorage.setItem("authorized", email)
     }
     setAuth(newAuth);
   };
