@@ -35,7 +35,7 @@ const carRoutes = {
 router.get(carRoutes.GET, carsController.getAllCars);
 router.get(carRoutes.GET_ONE, carsController.getOneCar);
 router.post(carRoutes.CREATE, upload.single("file"), carsController.createCar);
-router.put(carRoutes.UPDATE, carsController.updateCar);
+router.put(carRoutes.UPDATE, upload.single("file"), carsController.updateCar);
 router.delete(carRoutes.DELETE, carsController.deleteCar);
 
 export default router;

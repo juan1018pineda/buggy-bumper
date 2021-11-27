@@ -14,13 +14,25 @@ const EditCar = ({ editModal, setEditModal, setCars, car }) => {
 
   const handleEditCar = async (event) => {
     event.preventDefault();
+
+    const [carType, doors, seats, bags, price, image] = event.target;
+    let imageName = car.image;
+    const file = image.files[0];
+
+    if (file) {
+      imageName = `${process.env.REACT_APP_URL_BASE}${carType.value}.${
+        file.type.split("/")[1]
+      }`;
+    }
+
     const updatedCar = {
-      carType: event.target[0].value,
-      doors: event.target[1].value,
-      seats: event.target[2].value,
-      bags: event.target[3].value,
-      price: parseInt(event.target[4].value),
-      // image: event.target[5].value,
+      carType: carType.value,
+      doors: doors.value,
+      seats: seats.value,
+      bags: bags.value,
+      price: parseInt(price.value) || 0,
+      image: imageName,
+      file: file || null,
     };
     const finalCar = await editCar(carId, updatedCar);
 
