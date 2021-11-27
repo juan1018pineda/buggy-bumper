@@ -8,14 +8,20 @@ const NewCar = ({ addModal, setAddModal, setCars }) => {
 
   const handleAddCar = async (event) => {
     event.preventDefault();
+    const imageName = `${process.env.REACT_APP_URL_BASE}${event.target[0].value}.${
+      event.target[5].files[0].type.split("/")[1]
+    }`;
+
     const newCar = {
       carType: event.target[0].value,
-      doors: event.target[1].value,
-      seats: event.target[2].value,
-      bags: event.target[3].value,
-      price: parseInt(event.target[4].value),
-      image: event.target[5].value,
+      doors: event.target[1]?.value,
+      seats: event.target[2]?.value,
+      bags: event.target[3]?.value,
+      price: parseInt(event.target[4]?.value),
+      image: imageName,
+      file: event.target[5]?.files[0],
     };
+
     const car = await addCar(newCar);
     setCars((prevState) => [...prevState, car.data]);
     handleClose();

@@ -20,7 +20,7 @@ const EditCar = ({ editModal, setEditModal, setCars, car }) => {
       seats: event.target[2].value,
       bags: event.target[3].value,
       price: parseInt(event.target[4].value),
-      image: event.target[5].value,
+      // image: event.target[5].value,
     };
     const finalCar = await editCar(carId, updatedCar);
 
@@ -85,7 +85,7 @@ const EditCar = ({ editModal, setEditModal, setCars, car }) => {
               Subir imagen
             </Form.Label>
             <Col sm={6}>
-              <Form.Control type="text" defaultValue={car?.image} />
+              <Form.Control type="file" />
             </Col>
           </Form.Group>
           <Modal.Footer>

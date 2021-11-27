@@ -12,8 +12,16 @@ export const getCar = async (idCar) => {
 };
 
 export const addCar = async (newCar) => {
+  const form = new FormData();
+  form.append("carType", newCar.carType);
+  form.append("doors", newCar.doors);
+  form.append("seats", newCar.seats);
+  form.append("bags", newCar.bags);
+  form.append("price", newCar.price);
+  form.append("image", newCar.image);
+  form.append("file", newCar.file);
   const endpoint = "/cars/create";
-  const response = await axios.post(`${API_URL}${endpoint}`, newCar);
+  const response = await axios.post(`${API_URL}${endpoint}`, form);
   if (response) {
     return response;
   } else {
