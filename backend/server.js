@@ -7,14 +7,14 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import { carRouter, userRouter } from "./routes/index.js";
+import { carRouter, userRouter, rentalsRouter } from "./routes/index.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/", carRouter, userRouter);
+app.use("/", carRouter, userRouter, rentalsRouter);
 
 // Configure static files
 app.use(express.static(path.join(__dirname, "/public")));
