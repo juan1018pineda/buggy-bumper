@@ -73,7 +73,7 @@ const Home = () => {
         </section>
         <section className="rent-car">
           <h1 ref={scrollRef}>Alquilar un auto</h1>
-          <p>Chevrolet Spark, 4 puertas, 4 puestos, 1 maleta</p>
+          <p>{`${selectedCar?.carType}, ${selectedCar?.doors}, ${selectedCar?.seats}, ${selectedCar?.bags}`}</p>
           <div className="rent-selected-car">
             <Card style={{ width: "25rem" }}>
               <Card.Img variant="top" src={selectedCar?.image} />
