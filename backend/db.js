@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const db = {
   connect: function () {
-    mongoose.connect("mongodb://localhost:27017/buggy-bumper", {
+    //mongodb://localhost:27017/buggy-bumper
+    mongoose.connect("mongodb+srv://juan1018pineda:´Juapin2021.,@cluster0.uuvd0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
       useNewUrlParser: true,
     });
     mongoose.connection.on("error", function (e) {

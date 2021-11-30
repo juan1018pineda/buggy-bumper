@@ -16,6 +16,8 @@ const Home = () => {
     scrollRef.current.scrollIntoView();
   };
 
+  const handlePrice = (tag, event) => {};
+
   useEffect(() => {
     const loadCars = async () => {
       const cars = await axios.get(`${API_URL}/cars`);
@@ -85,7 +87,7 @@ const Home = () => {
                   <li>{selectedCar?.bags}</li>
                 </ul>
                 <h5>${selectedCar?.price}</h5>
-                <Button variant="primary">Alquilar</Button>
+                <Button>Alquilar</Button>
               </Card.Body>
             </Card>
             <Form>
@@ -118,16 +120,22 @@ const Home = () => {
                   Desde:
                 </Form.Label>
                 <Col sm={4}>
-                  <Form.Control type="date" />
+                  <Form.Control
+                    type="date"
+                    onChange={(event) => handlePrice("from", event)}
+                  />
                 </Col>
                 <Form.Label column sm={2}>
                   Hasta:
                 </Form.Label>
                 <Col sm={4}>
-                  <Form.Control type="date" />
+                  <Form.Control
+                    type="date"
+                    onChange={(event) => handlePrice("to", event)}
+                  />
                 </Col>
               </Form.Group>
-              <h5 className="total-rental">TOTAL: $000.000</h5>
+              <h5 className="total-rental">TOTAL: $0</h5>
               <div className="rent-button">
                 <Button type="submit">PAGAR</Button>
               </div>

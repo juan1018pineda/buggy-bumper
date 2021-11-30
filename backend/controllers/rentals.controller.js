@@ -31,3 +31,31 @@ export const createRental = (req, res) => {
     });
   }
 };
+
+export const updateRental = (req, res) => {
+  const { id } = req.params;
+  const updatedRental = req.body;
+
+  db.connect();
+
+  Rentals.findById(id, (err, rentals) => {
+    if (err) res.status(500).send(err);
+    Rentals.updateOne(rentals, updatedRental, (err, value) => {
+      if (err) res.status(500).send(err);
+      res.status(200).send(value);
+    });
+  });
+};
+
+export const deleteRental = (req, res) => {
+  const { id } = req.params;
+  db.connect();
+
+  Rentals.findById(id, (err, rentals) => {
+    if (err) res.status(404).send(err);
+    rentals.remove((err, value) => {
+      if (err) res.status(500).send(err);
+      res.send(value);
+    });
+  });
+};

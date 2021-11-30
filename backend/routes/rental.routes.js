@@ -14,5 +14,9 @@ const rentalRoutes = {
 router.get(rentalRoutes.GET, rentalsController.getAllRentals);
 router.get(rentalRoutes.GET_ONE, rentalsController.getRental);
 router.post(rentalRoutes.CREATE, rentalsController.createRental);
+router.put(rentalRoutes.UPDATE, rentalsController.updateRental);
+router.delete(rentalRoutes.DELETE, rentalsController.deleteRental);
+
+
 
 export default router;
