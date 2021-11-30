@@ -10,7 +10,7 @@ export const getAllUsers = (req, res) => {
 
   Users.find((err, data) => {
     if (err) res.status(500).send();
-    if (data.length === 0) res.status(204).send();
+    if (data.length === 0) res.status(204);
     res.status(200).send(data);
   });
 };

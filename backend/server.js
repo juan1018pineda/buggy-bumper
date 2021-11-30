@@ -16,6 +16,10 @@ app.use(express.json());
 
 app.use("/", carRouter, userRouter, rentalsRouter);
 
+app.get("/", (req, res) => {
+  res.send("<h1>Buggy Bumper API</h1>");
+});
+
 // Configure static files
 app.use(express.static(path.join(__dirname, "/public")));
 
