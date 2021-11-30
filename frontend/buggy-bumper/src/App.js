@@ -21,7 +21,7 @@ function App() {
         <Route
           exact
           path="/admin"
-          element={<CarList auth={auth} setAuth={setAuth}/>}
+          element={<CarList auth={auth} setAuth={setAuth} />}
         ></Route>
         <Route exact path="/home" element={<Home />}></Route>
       </Routes>

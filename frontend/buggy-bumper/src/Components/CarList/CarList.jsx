@@ -12,6 +12,8 @@ import "./CarList.scss";
 
 const CarList = ({ auth, setAuth }) => {
   const user = localStorage.authorized;
+  const navigate = useNavigate();
+
   const [cars, setCars] = useState([]);
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState({
@@ -24,8 +26,6 @@ const CarList = ({ auth, setAuth }) => {
     carId: undefined,
     pos: undefined,
   });
-  const navigate = useNavigate();
-
 
   useEffect(() => {
     if (!auth) {

@@ -13,7 +13,7 @@ const Login = ({ auth, setAuth }) => {
     if (auth) {
       navigate("/admin");
     }
-  }, [auth, navigate])
+  }, [auth, navigate]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -22,8 +22,8 @@ const Login = ({ auth, setAuth }) => {
     const login = { email, password };
 
     const newAuth = await checkLogin(login);
-    if(newAuth){
-      localStorage.setItem("authorized", email)
+    if (newAuth) {
+      localStorage.setItem("authorized", email);
     }
     setAuth(newAuth);
   };
@@ -37,8 +37,12 @@ const Login = ({ auth, setAuth }) => {
         <h2>LA MEJOR RED DE ALQUILER DE AUTOS</h2>
       </section>
       <form className="login-form" onSubmit={handleLogin}>
-        <input type="text" placeholder="Usuario" autoComplete="email"/>
-        <input type="password" placeholder="Clave" autoComplete="current-password" />
+        <input type="text" placeholder="Usuario" autoComplete="email" />
+        <input
+          type="password"
+          placeholder="Clave"
+          autoComplete="current-password"
+        />
         <button type="submit">Ingresar</button>
       </form>
     </div>

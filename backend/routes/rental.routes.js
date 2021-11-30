@@ -17,6 +17,4 @@ router.post(rentalRoutes.CREATE, rentalsController.createRental);
 router.put(rentalRoutes.UPDATE, rentalsController.updateRental);
 router.delete(rentalRoutes.DELETE, rentalsController.deleteRental);
 
-
-
 export default router;

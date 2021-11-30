@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import homeCircleImage from "../../assets/circle.png";
 import axios from "axios";
 import { Card, Button, Form, Row, Col } from "react-bootstrap";
+import Pay from "../Pay";
 import { API_URL } from "../../constants";
 
 import "./Home.scss";
@@ -9,14 +10,61 @@ import "./Home.scss";
 const Home = () => {
   const [cars, setCars] = useState([]);
   const [selectedCar, setSelectedCar] = useState();
+  const [rentalDates, setRentalDates] = useState({
+    from: 0,
+    to: 0,
+  });
+  const [price, setPrice] = useState(0);
+  const [payModal, setPayModal] = useState({
+    showModal: false,
+    rentalData: undefined,
+  });
   const scrollRef = useRef(null);
+
+  const getTotalRental = () => {
+    const { from, to } = rentalDates;
+    const days = to - from + 1;
+    const total = days * selectedCar.price;
+    if (total < 0) {
+      setPrice(0);
+    } else {
+      setPrice(total);
+    }
+  };
 
   const handleSelect = (i) => {
     setSelectedCar(cars[i]);
     scrollRef.current.scrollIntoView();
   };
 
-  const handlePrice = (tag, event) => {};
+  const handleDates = (tag, event) => {
+    setRentalDates((prevState) => ({
+      ...prevState,
+      [tag]: Date.parse(event.target.value) / (1000 * 60 * 60 * 24),
+    }));
+  };
+
+  const handlePay = (event) => {
+    event.preventDefault();
+    const [email, name, phone, from, to] = event.target;
+    const rentalData = {
+      email: email.value,
+      name: name.value,
+      phone: phone.value,
+      from: from.value,
+      to: to.value,
+      total: price,
+      idCar: selectedCar._id,
+    };
+    setPayModal({ showModal: true, rentalData });
+  };
+
+  useEffect(() => {
+    if (selectedCar && rentalDates) {
+      getTotalRental();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCar, rentalDates]);
 
   useEffect(() => {
     const loadCars = async () => {
@@ -51,7 +99,12 @@ const Home = () => {
                   <li>{seats}</li>
                   <li>{bags}</li>
                 </ul>
-                <h5>${price}</h5>
+                <h5>
+                  $
+                  {price.toLocaleString(navigator.language, {
+                    minimumFractionDigits: 0,
+                  })}
+                </h5>
                 <Button
                   variant="primary"
                   onClick={() => {
@@ -86,11 +139,16 @@ const Home = () => {
                   <li>{selectedCar?.seats}</li>
                   <li>{selectedCar?.bags}</li>
                 </ul>
-                <h5>${selectedCar?.price}</h5>
+                <h5>
+                  $
+                  {selectedCar?.price.toLocaleString(navigator.language, {
+                    minimumFractionDigits: 0,
+                  })}
+                </h5>
                 <Button>Alquilar</Button>
               </Card.Body>
             </Card>
-            <Form>
+            <Form onSubmit={handlePay}>
               <Form.Group as={Row} className="mb-5">
                 <Form.Label column sm={2}>
                   Email:
@@ -122,7 +180,7 @@ const Home = () => {
                 <Col sm={4}>
                   <Form.Control
                     type="date"
-                    onChange={(event) => handlePrice("from", event)}
+                    onChange={(event) => handleDates("from", event)}
                   />
                 </Col>
                 <Form.Label column sm={2}>
@@ -131,15 +189,21 @@ const Home = () => {
                 <Col sm={4}>
                   <Form.Control
                     type="date"
-                    onChange={(event) => handlePrice("to", event)}
+                    onChange={(event) => handleDates("to", event)}
                   />
                 </Col>
               </Form.Group>
-              <h5 className="total-rental">TOTAL: $0</h5>
+              <h5 className="total-rental">
+                TOTAL: $
+                {price.toLocaleString(navigator.language, {
+                  minimumFractionDigits: 0,
+                })}
+              </h5>
               <div className="rent-button">
                 <Button type="submit">PAGAR</Button>
               </div>
             </Form>
+            <Pay payModal={payModal} setPayModal={setPayModal} />
           </div>
         </section>
       </div>
