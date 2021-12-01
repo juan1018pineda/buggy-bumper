@@ -4,10 +4,13 @@ import axios from "axios";
 import { Card, Button, Form, Row, Col } from "react-bootstrap";
 import Pay from "../Pay";
 import { API_URL } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 import "./Home.scss";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [cars, setCars] = useState([]);
   const [selectedCar, setSelectedCar] = useState();
   const [rentalDates, setRentalDates] = useState({
@@ -20,6 +23,10 @@ const Home = () => {
     rentalData: undefined,
   });
   const scrollRef = useRef(null);
+
+  const handleAdmin = () => {
+    navigate("/login");
+  };
 
   const getTotalRental = () => {
     const { from, to } = rentalDates;
@@ -78,6 +85,9 @@ const Home = () => {
   return (
     <>
       <div className="login-container">
+        <button onClick={handleAdmin} className="admin-login">
+          Entrar como admin
+        </button>
         <section className="login-titles">
           <h1>
             BUGGY &<br /> BUMPER, INC
