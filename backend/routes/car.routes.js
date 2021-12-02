@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     // cb(null, "public");
   },
   filename: function (req, file, cb) {
-    cb(null, `${req.body.carType.replace(/\s+/g, "").toLowerCase()}.${file.mimetype.split("/")[1]}`);
+    cb(null, `${req.body.carType.replace(/\s+/g, "-").toLowerCase()}.${file.mimetype.split("/")[1]}`);
   },
 });
 
