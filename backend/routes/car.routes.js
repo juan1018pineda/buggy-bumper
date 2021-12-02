@@ -13,13 +13,14 @@ function dirname(meta) {
 //configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../public"));
+    // cb(null, path.join(__dirname, "../public"));
+    cb(null, "public");
   },
   filename: function (req, file, cb) {
-    console.log("Filename", req.body);
-    cb(null, `${req.body.carType}.${file.mimetype.split("/")[1]}`);
+    cb(null, `${req.body.carType.replace(/\s+/g, "").toLowerCase()}.${file.mimetype.split("/")[1]}`);
   },
 });
+
 const upload = multer({ storage: storage });
 
 const router = express.Router();
